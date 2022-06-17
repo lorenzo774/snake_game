@@ -1,23 +1,34 @@
 mod inputs;
-mod entities;
 mod config;
+mod table;
+mod snake;
+mod vec;
+mod ui;
 
 use inputs::get_input;
 use std::error::Error;
-use entities::{Table};
+use table::{Table};
+use ui::*;
+use config::SPEED;
+
+use std::thread::sleep;
+use std::time::Duration;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // TODO: Generate in random position the snake
     let mut table = Table::new();
-
-    let winning = false;
-    let mut player_move: char;
-
-    // TODO: Handle the loop (Handle inputs and apple taken by the snake)
-    while !winning {
-        table.render();
-        player_move = get_input()?;
+    let mut player_move: char = 'a';
+    
+    while !table.lose {
+        player_move = match get_input()? {
+            ' ' => player_move,
+            input => input
+        };
+        sleep(Duration::from_millis(SPEED));
         table.snake.move_snake(player_move);
+        table.update();
+        clear_screen();
+        display_txt(format!("Apples: {} \n", table.apple_counter));
+        table.render();
     }
     Ok(())
 }
