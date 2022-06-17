@@ -1,19 +1,19 @@
-use crossterm::{event::{poll, read, Event, KeyCode}};
-use std::time::Duration;
 use crate::config::SPEED;
+use crossterm::event::{poll, read, Event, KeyCode};
+use std::time::Duration;
 
 // Get WASD input from keyboard
 pub fn get_input() -> crossterm::Result<char> {
-    const WASD: [char; 4] = ['w', 'a', 's', 'd'];
+    const KEYS: [char; 5] = ['q', 'w', 'a', 's', 'd'];
     if poll(Duration::from_millis(SPEED))? {
         let event = read()?;
-        // Check WASD input
-        for input in WASD {
+        // Check KEYS input
+        for input in KEYS {
             if event == Event::Key(KeyCode::Char(input).into()) {
                 return Ok(input);
             }
         }
-        return Ok(' ')
+        return Ok(' ');
     }
     Ok(' ')
-} 
+}
