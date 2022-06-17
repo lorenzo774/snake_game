@@ -17,7 +17,8 @@ use std::time::Duration;
 fn main() -> Result<(), Box<dyn Error>> {
     let mut table = Table::new();
     let mut player_move: char = 'a';
-    
+
+    // Game loop
     while !table.lose {
         player_move = match get_input()? {
             ' ' => player_move,

@@ -17,6 +17,7 @@ fn gen_random_pos() -> Vec2<u8> {
     }
 } 
 
+// Table struct used to contain game data
 pub struct Table {
     pub cells: [[char; COLS] ; ROWS],
     pub snake: Snake,
@@ -92,7 +93,6 @@ impl Table {
 
     pub fn update(&mut self) {
         self.snake_colliding();
-        // self.render();
     }
 
 }
