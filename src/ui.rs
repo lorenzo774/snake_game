@@ -1,12 +1,17 @@
 use crossterm::{
+    cursor::{Hide, MoveTo},
     execute,
-    style::{Print, ResetColor, Color, SetForegroundColor},
-    terminal::*
+    style::{Color, Print, ResetColor, SetForegroundColor},
+    terminal::*,
 };
-use std::io::{stdout};
+use std::io::stdout;
 
 pub fn clear_screen() {
-    execute!(stdout(),Clear(ClearType::All)).unwrap();
+    execute!(stdout(), Clear(ClearType::All)).unwrap();
+}
+
+pub fn reset_cursor() {
+    execute!(stdout(), Hide, MoveTo(0, 0)).unwrap();
 }
 
 pub fn display_txt(txt: String) {
@@ -15,5 +20,6 @@ pub fn display_txt(txt: String) {
         SetForegroundColor(Color::Cyan),
         Print(txt + "\n"),
         ResetColor
-    ).unwrap();
+    )
+    .unwrap();
 }
